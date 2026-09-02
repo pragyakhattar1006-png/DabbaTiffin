@@ -22,7 +22,7 @@ export default function TopNav() {
             key={link.to}
             to={link.to}
             className={({ isActive }) =>
-              `py-1.5 border-b-[3px] ${
+              `py-1.5 border-b-[3px] text-white ${
                 isActive ? "border-saffron" : "border-transparent opacity-80"
               }`
             }
