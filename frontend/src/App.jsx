@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import BookingReview from "./pages/BookingReview";
 import Confirmation from "./pages/Confirmation";
+import PaymentSuccess from "./pages/PaymentSuccess";
 import Tracking from "./pages/Tracking";
 import Plans from "./pages/Plans";
 import Skip from "./pages/Skip";
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>} />
             <Route path="/booking" element={<ProtectedRoute><BookingReview /></ProtectedRoute>} />
             <Route path="/confirmation/:bookingId" element={<ProtectedRoute><Confirmation /></ProtectedRoute>} />
+            <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
             <Route path="/tracking/:orderId" element={<ProtectedRoute><Tracking /></ProtectedRoute>} />
             <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
             <Route path="/skip" element={<ProtectedRoute><Skip /></ProtectedRoute>} />

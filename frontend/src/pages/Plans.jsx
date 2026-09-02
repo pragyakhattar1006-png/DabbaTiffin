@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { useAuth } from "../context/AuthContext";
 import AppShell from "../components/AppShell";
@@ -8,6 +9,7 @@ import MockPaymentModal from "../components/MockPaymentModal";
 
 export default function Plans() {
   const { user, updateUser } = useAuth();
+  const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
   const [mySub, setMySub] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -40,6 +42,7 @@ export default function Plans() {
       }
       const sub = await api.startSubscription({ plan_id: selectedPlan.id, payment_method: paymentMethod });
       setMySub(sub);
+      navigate("/payment-success", { state: { subscription: sub } });
     } catch (err) {
       setError(err.message || "Could not start plan");
       throw err;
