@@ -6,18 +6,20 @@ import { useAuth } from "../context/AuthContext";
 import { Card, PrimaryButton } from "../components/ui";
 import { money, formatDateFull } from "../lib/format";
 import { DishThumb } from "./Home";
+import MockPaymentModal from "../components/MockPaymentModal";
 
 export default function BookingReview() {
   const cart = useCart();
   const { user, updateUser } = useAuth();
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState("upi");
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [showPayment, setShowPayment] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   if (cart.count === 0) return <Navigate to="/menu" replace />;
 
-  const confirm = async () => {
+  const confirm = async (propagateError = false) => {
     setBusy(true);
     setError("");
     try {
@@ -32,9 +34,15 @@ export default function BookingReview() {
       navigate(`/confirmation/${booking.id}`);
     } catch (err) {
       setError(err.message || "Could not confirm booking");
+      if (propagateError) throw err;
     } finally {
       setBusy(false);
     }
+  };
+
+  const pay = () => {
+    if (paymentMethod === "card") setShowPayment(true);
+    else confirm();
   };
 
   return (
@@ -90,9 +98,9 @@ export default function BookingReview() {
         <Card className="p-4">
           <div className="text-xs font-extrabold text-muted tracking-wide mb-2.5">PAY WITH</div>
           <PaymentOption
-            label="UPI · aarav@upi"
-            active={paymentMethod === "upi"}
-            onClick={() => setPaymentMethod("upi")}
+            label="Card · demo payment"
+            active={paymentMethod === "card"}
+            onClick={() => setPaymentMethod("card")}
           />
           <PaymentOption
             label={`Tiffin wallet · ${money(user?.wallet_balance)}`}
@@ -104,11 +112,12 @@ export default function BookingReview() {
 
         {error && <div className="text-sm text-warn font-semibold">{error}</div>}
 
-        <PrimaryButton onClick={confirm} disabled={busy} className="py-4 text-base">
+        <PrimaryButton onClick={pay} disabled={busy} className="py-4 text-base">
           {busy ? "Confirming…" : `Pay ${money(cart.total)} and confirm`}
         </PrimaryButton>
         <div className="text-center text-xs text-muted">Skip either meal free until 24:00 tonight</div>
       </div>
+      {showPayment && <MockPaymentModal amount={cart.total} onSuccess={() => confirm(true)} onClose={() => setShowPayment(false)} />}
     </div>
   );
 }

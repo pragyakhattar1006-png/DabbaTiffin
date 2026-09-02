@@ -11,7 +11,7 @@ Implements the DabbaTiffin mockups (`DabbaTiffin Mockups.dc.html`) as a real app
 - **Database**: PostgreSQL (SQLite locally if `DATABASE_URL` is unset)
 - **Auth**: email/password with JWT bearer tokens
 - **Payments**: simulated (no real payment gateway) — bookings and subscriptions are marked
-  paid instantly, deducting from the in-app Tiffin wallet when that's the chosen method
+  paid through a local demo-card screen (or the in-app Tiffin wallet when selected)
 
 ## Demo login
 
@@ -25,6 +25,18 @@ password: Dabba@123
 It comes with an active breakfast subscription, order history, a ₹210 wallet balance, and a
 delivery point already set, so you can log in and place an order immediately. The login
 screen also has a "Use it" shortcut that fills these in.
+
+## Demo payment
+
+Card payments use a local mock checkout; no bank or payment provider is contacted. The payment
+screen displays a **Use it** shortcut, or enter the following demo values manually:
+
+```
+card:   4242 4242 4242 4242
+expiry: 12/30
+cvv:    123
+otp:    123456
+```
 
 ## Project layout
 

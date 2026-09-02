@@ -4,13 +4,15 @@ import { useAuth } from "../context/AuthContext";
 import AppShell from "../components/AppShell";
 import { Card, PrimaryButton } from "../components/ui";
 import { money } from "../lib/format";
+import MockPaymentModal from "../components/MockPaymentModal";
 
 export default function Plans() {
   const { user, updateUser } = useAuth();
   const [plans, setPlans] = useState([]);
   const [mySub, setMySub] = useState(null);
   const [selected, setSelected] = useState(null);
-  const [paymentMethod] = useState("upi");
+  const [paymentMethod] = useState("card");
+  const [showPayment, setShowPayment] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -40,6 +42,7 @@ export default function Plans() {
       setMySub(sub);
     } catch (err) {
       setError(err.message || "Could not start plan");
+      throw err;
     } finally {
       setBusy(false);
     }
@@ -49,6 +52,10 @@ export default function Plans() {
     if (!mySub) return;
     const updated = await api.pauseSubscription(!mySub.paused);
     setMySub(updated);
+  };
+
+  const pay = () => {
+    if (selectedPlan) setShowPayment(true);
   };
 
   return (
@@ -124,11 +131,15 @@ export default function Plans() {
 
         {error && <div className="text-sm text-warn font-semibold">{error}</div>}
 
-        <PrimaryButton onClick={start} disabled={busy || !selectedPlan} className="py-4 text-base">
+        <div className="bg-cream/60 border border-saffron/40 rounded-lg p-3 text-[12px] text-bottle-dark leading-relaxed">
+          <strong>Demo payment:</strong> use card 4242 4242 4242 4242 and OTP 123456 at checkout.
+        </div>
+        <PrimaryButton onClick={pay} disabled={busy || !selectedPlan} className="py-4 text-base">
           {busy ? "Starting…" : `Start plan · ${selectedPlan ? money(selectedPlan.total_price) : ""}`}
         </PrimaryButton>
         <div className="text-center text-xs text-muted">Cancel anytime before the next cycle</div>
       </div>
+      {showPayment && selectedPlan && <MockPaymentModal amount={selectedPlan.total_price} onSuccess={start} onClose={() => setShowPayment(false)} />}
     </AppShell>
   );
 }
