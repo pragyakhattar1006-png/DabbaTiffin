@@ -82,7 +82,7 @@ export default function Menu() {
                 } ${item.sold_out ? "opacity-55" : ""}`}
               >
                 <div className="w-[74px] h-[74px] md:w-full md:h-[118px] rounded-lg md:rounded-none bg-canvas flex-none overflow-hidden">
-                  <DishThumb name={item.dish.name} />
+                  <DishThumb name={item.dish.name} imageUrl={item.dish.image_url} />
                 </div>
                 <div className="flex-1 md:p-3.5">
                   <div className="text-[15px] font-extrabold text-ink">{item.dish.name}</div>

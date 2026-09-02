@@ -62,7 +62,7 @@ export default function BookingReview() {
             return (
               <div key={mealType} className="flex gap-3 items-center">
                 <div className="w-10 h-10 rounded-lg bg-canvas flex-none overflow-hidden">
-                  <DishThumb name={item.dish.name} />
+                  <DishThumb name={item.dish.name} imageUrl={item.dish.image_url} />
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-extrabold text-ink">{item.dish.name}</div>

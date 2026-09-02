@@ -238,7 +238,7 @@ function TomorrowRow({ slot, onBook, onSkip, skipping }) {
   );
 }
 
-export function DishThumb({ name }) {
+export function DishThumb({ name, imageUrl }) {
   const slug = name
     ?.toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
@@ -255,10 +255,15 @@ export function DishThumb({ name }) {
     chole: "chole-chawal",
   };
   const file = map[slug];
-  if (!file) return null;
+  const src = imageUrl
+    ? `${import.meta.env.BASE_URL}${imageUrl.replace(/^\//, "")}`
+    : file
+    ? `${import.meta.env.BASE_URL}dishes/${file}.jpg`
+    : null;
+  if (!src) return null;
   return (
     <img
-      src={`${import.meta.env.BASE_URL}dishes/${file}.jpg`}
+      src={src}
       alt={name}
       className="w-full h-full object-cover"
     />
