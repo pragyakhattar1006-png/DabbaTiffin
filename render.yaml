@@ -31,7 +31,7 @@ services:
     runtime: static
     plan: free
     rootDir: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: (pip install -r ../scripts/requirements.txt && python3 ../scripts/fetch_dish_images.py) || true; npm install && npm run build
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
