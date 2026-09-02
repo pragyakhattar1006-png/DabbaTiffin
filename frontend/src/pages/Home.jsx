@@ -245,14 +245,22 @@ export function DishThumb({ name }) {
     .replace(/(^-|-$)/g, "");
   const map = {
     "poha-with-sev": "poha",
+    poha: "poha",
     upma: "upma",
     "idli-with-sambhar": "idli-sambhar",
     "sabudana-khichdi": "sabudana-khichdi",
     "misal-pav": "misal-pav",
     "rajma-chawal": "rajma-chawal",
     "chole-chawal": "chole-chawal",
+    chole: "chole-chawal",
   };
   const file = map[slug];
   if (!file) return null;
-  return <img src={`/dishes/${file}.jpg`} alt={name} className="w-full h-full object-cover" />;
+  return (
+    <img
+      src={`${import.meta.env.BASE_URL}dishes/${file}.jpg`}
+      alt={name}
+      className="w-full h-full object-cover"
+    />
+  );
 }
