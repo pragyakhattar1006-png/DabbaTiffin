@@ -25,13 +25,11 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 
 # slug -> (search query on Commons, dish display name, placeholder base color)
 DISHES: dict[str, tuple[str, str, str]] = {
-    "poha": ("Kanda poha Maharashtrian breakfast", "Poha with sev", "#F4E9CC"),
     "upma": ("Rava upma South Indian breakfast", "Upma", "#EDE7DA"),
     "idli-sambhar": ("Idli sambar chutney", "Idli with sambhar", "#E7EDE3"),
     "sabudana-khichdi": ("Sabudana khichdi", "Sabudana khichdi", "#E9E4DA"),
     "misal-pav": ("Misal pav Maharashtrian dish", "Misal pav", "#F0E3D6"),
     "rajma-chawal": ("Rajma chawal kidney beans rice", "Rajma chawal", "#E7EFEA"),
-    "chole-chawal": ("Chole chawal chickpea curry rice", "Chole chawal", "#F7E7D3"),
 }
 
 TARGET_WIDTH = 640
